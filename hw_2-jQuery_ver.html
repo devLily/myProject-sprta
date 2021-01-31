@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Sparta Mall</title>
+    <link rel="stylesheet" href="./hw1_main.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Poor+Story&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        #or-rate {
+            color: #007bff;
+        }
+    </style>
+
+</head>
+<body>
+<header>
+    <strong>
+        <a href="https://spartacodingclub.kr/">SPARTA MALL</a>
+    </strong>
+</header>
+<main>
+    <img class="peng-soo" src="./펭수%20복숭아.jpg" alt="펭수복숭아">
+    <div class="sct-wrap">
+        <section class="sct-product">
+            <h1>펭수 복숭아 <span>가격: 33.500원 / 1box (3kg)</span></h1>
+            <p>
+                펭-하! 우주 대스타 펭수가 자랑하는 새콤달콤 복숭아에요. <br>
+                이상 기온으로 냉해 피해를 입은 복숭아 농가를 위해 마음씨도 예쁜 펭수가 준비한 첫 크라우드 펀딩!<br>
+                과즙이 가득한 통통하고 향기까지 넘나 좋은 복숭아를 구매하시면,<br>
+                크라우드 펀딩 해피빈을 통해 생산량이 줄어든 농가까지 돕게 되는 일석이조, 아니 <br>
+                귀여운 복숭아 펭수까지 볼 수 있는 일석삼조의 기회, 놓치지 마세요!
+            </p>
+
+        </section>
+        <section class="sct-order">
+            <h2>주문하기<span id="or-rate">달러-원 환율 :</span></h2>
+            <div class="sct-order-name">
+                <label for="user-name" class="lb-name"> 주문자 성함: </label>
+                <input type="text" id="user-name" placeholder=" 성함을 입력하세요">
+            </div>
+            <div class="sct-order-qua">
+                <label for="quantity-select" class="lb-qua"> 수량: </label>
+                <select name="수량" id="quantity-select">
+                    <option value="">---수량을 선택하세요---</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="sct-order-add">
+                <label for="user-address" class="lb-add"> 주소: </label>
+                <input type="address" id="user-address" placeholder=" 주소를 입력하세요">
+            </div>
+            <div class="sct-order-tel">
+                <label for="user-tel" class="lb-tel"> 전화번호: </label>
+                <input type="tel" id="user-tel" placeholder=" 연락처를 입력하세요">
+            </div>
+        </section>
+        <button id="btn-order" onclick="orderCompleted()">주문하기</button>
+    </div>
+</main>
+<script>
+    $(document).ready(exchangeRate());
+
+    function exchangeRate() {
+        $.ajax({
+            type: "GET",
+            url: "https://api.manana.kr/exchange/rate.json",
+            success: function (response) {
+                // console.log(response);
+                let rates = response[1]['rate'];
+                console.log(rates);
+                let tempHtml = `${rates}`;
+                $('#or-rate').append(tempHtml);
+            }
+        })
+    }
+
+    function orderCompleted() {
+        let usname = $("#user-name");
+        let usadd = $("#user-address");
+        let selec = $("#quantity-select");
+        let ustell = $("#user-tel");
+
+        if (!usname.val()) {
+            alert("성함을 확인하세요");
+            usname.focus();
+            return;
+        }
+        if (!selec.val()) {
+            alert("수량을 확인하세요");
+            selec.focus();
+            return;
+        }
+        if (!usadd.val()) {
+            alert("주소를 확인하세요");
+            usadd.focus();
+            return;
+        }
+        if (!ustell.val()) {
+            alert("연락처를 확인하세요");
+            ustell.focus();
+            return;
+        }
+        alert('주문이 완료 되었습니다.');
+    }
+
+    // js function orderCompleted!!!
+    // function orderCompleted() {
+    //     // alert('주문이 완료 되었습니다.');
+    //     let usname = document.getElementById("user-name");
+    //     console.log(usname.value);
+    //     //   let usselec = document.getElementsByTagName("option").value;
+    //     let usadd = document.getElementById("user-address");
+    //     console.log(usadd.value);
+    //
+    //     let selec = document.getElementById("quantity-select");
+    //     console.log(selec.value);
+    //
+    //     let ustell = document.getElementById("user-tel");
+    //     //   let usorder = document.getElementsByTagNameNS("input").value;
+    //     console.log(ustell.value);
+    //
+    //     if (!usname.value) {
+    //         alert("성함을 확인하세요");
+    //         usname.focus();
+    //         return;
+    //     }
+    //
+    //     if (!selec.value) {
+    //         alert("수량을 확인하세요");
+    //         selec.focus();
+    //         return;
+    //     }
+    //
+    //     if (!usadd.value) {
+    //         alert("주소를 확인하세요");
+    //         usadd.focus();
+    //         return;
+    //     }
+    //
+    //     if (!ustell.value) {
+    //         alert("연락처를 확인하세요");
+    //         ustell.focus();
+    //         return;
+    //     }
+    //
+    //     alert("주문이 완료 되었습니다.");
+    // }
+</script>
+</body>
+</html>
